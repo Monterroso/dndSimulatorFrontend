@@ -20,4 +20,37 @@ const getAllDependent = (indexes, objectList) => {
   return searchedIndexes
 }
 
-export {getAllDependent}
+const throwErrorIfMismatch = (obj, storedObj) => {
+  if (typeof obj !== typeof storedObj) {
+    throw Error(`Undo add object had a mismatch. ${obj} was expected, ${storedObj} found`)
+  }
+  else if (typeof obj === typeof {} ) {
+    Object.keys(obj).forEach(key => {
+      if (obj[key] !== storedObj[key]) {
+        throw Error(`Mismatch of objects, ${obj} was expected, ${storedObj} found`)
+      }
+    })
+
+    Object.keys(storedObj).forEach(key => {
+      if (obj[key] !== storedObj[key]) {
+        throw Error(`Mismatch of objects, ${obj} was expected, ${storedObj} found`)
+      }
+    })
+  } else if (typeof obj === typeof []) {
+    if (obj.length !== storedObj.length) {
+      throw Error(`Mismatch in array lengths, ${obj} was expected, ${storedObj} found`)
+    }
+
+    obj.forEach((val, index) => {
+      if (obj[index] !== storedObj[index]) {
+        throw Error(`Mismatch of array values, ${obj} was expected, ${storedObj} found`)
+      }
+    })
+  } else {
+    if (obj !== storedObj) {
+      throw Error(`Mismatch of values, ${obj} was expected, ${storedObj} found`)
+    }
+  }
+}
+
+export {getAllDependent, throwErrorIfMismatch}

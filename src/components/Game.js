@@ -1,6 +1,6 @@
 import React from "react"
 
-const Game = ({handler}) => {
+const Game = ({handler, actionSubmit}) => {
   // board dimensions
   const dims = handler.getObject(["board", "dims"]).map(index => handler.getObject([], index))
 
@@ -20,6 +20,10 @@ const Game = ({handler}) => {
 
   const currentUser = handler.getObject(["id"], actors[turn])
 
+  const currentActorStats = handler.getObject(["baseStats"], actors[turn])
+  const currentActorStatsIndex = handler.getIndex(currentActorStats)
+  const currentActorStatsPreview = handler.preview(currentActorStatsIndex)
+
   // Display action stack
   const actionStack = handler.getObject(["actionStack"])
 
@@ -27,7 +31,7 @@ const Game = ({handler}) => {
     const actorAction = handler.getObject([], index)
     const actor = handler.getObject(["id"], actorAction[0])
     const actionId = actorAction[1]
-    const startingPos = handler.getObject(["startingPos"], actionId).map(i => handler.getObject( [], i))
+    const startingPos = handler.getObject(["actorPos", actorAction[0]]).map(i => handler.getObject( [], i))
     const endingPos = handler.getObject(["endingPos"], actionId).map(i => handler.getObject( [], i))
     const actionType = handler.getObject(["actionType"], actionId)
 
@@ -64,6 +68,19 @@ const Game = ({handler}) => {
           )
         })}
       </p>
+
+      <p>Actor Stats: {
+          JSON.stringify(currentActorStatsPreview)
+        }
+      </p>
+
+      <form action="" onSubmit={(event) => actionSubmit(event, currentUser, event.target[0].value)}>
+        <label>Action Input</label>
+        <input
+          id="actionInput"
+          type="text"
+        />
+      </form>
     </div>
   )
 }

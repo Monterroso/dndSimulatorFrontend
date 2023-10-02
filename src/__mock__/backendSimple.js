@@ -2,7 +2,7 @@
 const mocker = ((mock, axios) => {
   
   mock
-  .onGet(/\/api\/games\/[0-9]*\/changes\/[0-9]*/)
+  .onGet(/\/games\/[0-9]*\/changes\/[0-9]*/)
   .reply(async function(config) {
     const urlRegex = config.url.match(/([0-9]*)\/changes\/([0-9]*)/)
     const gameNumber = urlRegex[1]

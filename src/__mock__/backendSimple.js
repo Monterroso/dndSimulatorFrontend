@@ -1,9 +1,9 @@
 
-const mocker = ((mock, axios) => {
+const mocker = (mock, axios) => {
   
   mock
   .onGet(/\/games\/[0-9]*\/changes\/[0-9]*/)
-  .reply(async function(config) {
+  .reply(async config => {
     const urlRegex = config.url.match(/([0-9]*)\/changes\/([0-9]*)/)
     const gameNumber = urlRegex[1]
     const changenumber = urlRegex[2]
@@ -14,7 +14,7 @@ const mocker = ((mock, axios) => {
 
     return [200, data]
   })
-})
+}
 
 export default mocker
 

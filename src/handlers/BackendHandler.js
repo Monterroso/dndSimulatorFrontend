@@ -7,6 +7,7 @@ import addParam from "./addParam"
 
 class BackendHandler {
   constructor(changes=[], lookup={}, lookupReverse=[], objects=[]) {
+
     this.changes = changes
     this.lookup = lookup
     this.lookupReverse = lookupReverse
@@ -204,6 +205,7 @@ class BackendHandler {
       const elemIndex = typeof(elem) === typeof(1) ? elem : this.getIndex(elem) 
 
       workingIndex = this._getObj(workingIndex)[elemIndex]
+
     })
 
     return this._getObj(workingIndex)
